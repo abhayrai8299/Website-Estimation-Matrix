@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, NavLink } from "react-router-dom";
+import Wordpress from './components/wordpress';
+import Shopify from './components/shopify';
+import Calculation from './components/calculation';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <>
+       <h1>Shopify</h1>
+       <button><NavLink className="" to="/wordpress">Wordpress</NavLink></button>
+      <button><NavLink className="" to="/shopify">Shopify</NavLink></button> 
+      </>
+      <Routes>
+        <Route path="/wordpress" element={<Wordpress />} />
+        <Route path="/shopify" element={<Shopify />} />
+        <Route path="/calculation" element={<Calculation />} ></Route>
+      </Routes>
     </div>
   );
 }
