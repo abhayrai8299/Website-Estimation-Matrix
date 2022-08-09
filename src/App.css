@@ -14,13 +14,21 @@
 }
 input
 {
-  width: 30px;
+  width: 60px;
+}
+.toggle
+{
+  cursor: pointer;
 }
 .switch {
   position: relative;
   display: inline-block;
   width: 90px;
   height: 34px;
+}
+.heading
+{
+  padding: 10px;
 }
 
 .switch input {display:none;}

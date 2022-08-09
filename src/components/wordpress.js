@@ -1,8 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import { NavLink } from "react-router-dom";
 
-const Wordpress = () => {
+
+
+const Wordpress = ({setTotal,setReviewSum,val,setVal,val2,setVal2,val3,setVal3,val4,setVal4}) => {
+  const [textState, setTextState] = useState("On");
+   const [textState2, setTextState2] = useState("On");
+   const [textState3, setTextState3] = useState("On");
+   const [textState4, setTextState4] = useState("Off");
+
+   useEffect(()=>{
+      if(textState==="On")
+      {
+        setVal(1);
+      }
+       if(textState==="Off")
+      {
+        setVal(0);
+      }
+       if(textState2==="On")
+      {
+        setVal2(1);
+      }
+       if(textState2==="Off")
+      {
+        setVal2(0);
+      }
+       if(textState3==="On")
+      {
+        setVal3(1);
+      }
+       if(textState3==="Off")
+      {
+        setVal3(0);
+      }
+       if(textState4==="On")
+      {
+        setVal4(1);
+      }
+     if(textState4==="Off")
+      {
+        setVal4(0);
+      }
+  },[textState,textState2,textState3,textState4])
+
+
+  const toggleText = () => {
+    setTextState((state) => (state === "On" ? "Off" : "On"));
+  };
+  const toggleText2 = () => {
+    setTextState2((state) => (state === "On" ? "Off" : "On"));
+  };
+  const toggleText3 = () => {
+    setTextState3((state) => (state === "On" ? "Off" : "On"));
+  };
+  const toggleText4 = () => {
+    setTextState4((state) => (state === "On" ? "Off" : "On"));
+  };
   const [defaults, setDefaults] = useState({
     Pages_with_Dynamic_content: "5",
     StaticPages: "3",
@@ -45,9 +100,28 @@ const Wordpress = () => {
     Time_Deployment: "6",
     Time_Tablet_Responsive: "12",
   });
+    let ReviewSum= (defaults.Pages_with_Dynamic_content*time.Time_Pages_with_Dynamic_content)+(defaults.StaticPages*time.Time_StaticPages)+(defaults.Animation*time.Time_Animation)
+  +(defaults.Dynamic_Content*time.Time_Dynamic_Content)+(defaults.Blogs_listing*time.Time_Blogs_listing)+(defaults.Blogs_Detail*time.Time_Blogs_Detail)
+  +(defaults.Form*time.Time_Form)+(defaults.Header*time.Time_Header)+(defaults.Footer*time.Time_Footer)+(time.Time_Mobile_Responsive_Setup*val3)+(defaults.Tablet_Responsive*val4);       
+ 
+  let Totalsum=ReviewSum+(defaults.Website_Accessibility*time.Time_Website_Accessibility)
+  +(defaults.Platform_Marketplace*time.Time_Platform_Marketplace)+(defaults.Party_Integrationg*time.Time_Party_Integrationg)+(defaults.Analytics*time.Time_Analytics)
+  +(time.Time_SEO_Enable*val)+(time.Time_SEO_W3C_Validations*val)+(time.Time_Setup*val2)+(defaults.Deployment*time.Time_Deployment);
 
-  const handlechangeDefault = () => {};
-  const handlechangeTime = () => {};
+ setTotal(Totalsum)  
+ setReviewSum(ReviewSum);
+
+  const handlechangeDefault = (e) => {
+    const name=e.target.name;
+    const value=e.target.value;
+    setDefaults({...defaults,[name]:value})
+ }
+  const handlechangeTime = (e) => {
+    const name=e.target.name;
+    const value=e.target.value;
+    setTime({...time,[name]:value})
+  };
+
   return (
     <div>
       <form>
@@ -70,6 +144,7 @@ const Wordpress = () => {
             time.Time_Pages_with_Dynamic_content *
             defaults.Pages_with_Dynamic_content
           }
+         
         />
         <br />
         Static Pages{" "}
@@ -282,15 +357,12 @@ const Wordpress = () => {
           onChange={handlechangeTime}
           name="Time_SEO_Enable"
         />
+        <span className="toggle" onClick={toggleText}>
+        {textState}
+      </span>
         <input
           type="number"
-          value={defaults.SEO_Enable}
-          onChange={handlechangeDefault}
-          name="SEO_Enable"
-        />
-        <input
-          type="number"
-          value={time.Time_SEO_Enable * defaults.SEO_Enable}
+          value={time.Time_SEO_Enable *val}
         />
         <br />
         SEO W3C Validations{" "}
@@ -300,15 +372,12 @@ const Wordpress = () => {
           onChange={handlechangeTime}
           name="Time_SEO_W3C_Validations"
         />
+       <span className="toggle" onClick={toggleText}>
+        {textState}
+      </span>
         <input
           type="number"
-          value={defaults.SEO_W3C_Validations}
-          onChange={handlechangeDefault}
-          name="SEO_W3C_Validations"
-        />
-        <input
-          type="number"
-          value={time.Time_SEO_W3C_Validations * defaults.SEO_W3C_Validations}
+          value={time.Time_SEO_W3C_Validations *val}
         />
         <br />
         Setup
@@ -318,13 +387,10 @@ const Wordpress = () => {
           onChange={handlechangeTime}
           name="Time_Setup"
         />
-        <input
-          type="number"
-          value={defaults.Setup}
-          onChange={handlechangeDefault}
-          name="Setup"
-        />
-        <input type="number" value={time.Time_Setup * defaults.Setup} />
+       <span className="toggle" onClick={toggleText2}>
+        {textState2}
+      </span>
+        <input type="number" value={time.Time_Setup *val2} />
         <br />
         Mobile Responsive Setup
         <input
@@ -333,17 +399,14 @@ const Wordpress = () => {
           onChange={handlechangeTime}
           name="Time_Pages_with_Dynamic_content"
         />
-        <input
-          type="number"
-          value={defaults.Mobile_Responsive_Setup}
-          onChange={handlechangeDefault}
-          name="Mobile_Responsive_Setup"
-        />
+        <span className="toggle" onClick={toggleText3}>
+        {textState3}
+      </span>
         <input
           type="number"
           value={
-            time.Time_Pages_with_Dynamic_content *
-            defaults.Pages_with_Dynamic_content
+            time.Time_Pages_with_Dynamic_content*
+            val3
           }
         />
         <br />
@@ -366,17 +429,23 @@ const Wordpress = () => {
         />
         <br />
         Tablet Responsive{" "}
-        <label className="switch">
-          <input type="checkbox" id="togBtn" />
-          <div className="slider round">
-            <span className="on">ON</span>
-            <span className="off">OFF</span>
-          </div>
-        </label>
+        <input
+          type="number"
+          value={time.Time_Tablet_Responsive}
+          onChange={handlechangeTime}
+          name="Time_Tablet_Responsive"
+        />
+         <span className="toggle" onClick={toggleText4}>
+        {textState4}
+      </span>
+        <input
+          type="number"
+          value={time.Time_Tablet_Responsive *val4}
+        />
         <br />
         <button>
           <NavLink className="" to="/calculation">
-            Calculation
+            Calculation Wordpress
           </NavLink>
         </button>
       </form>
